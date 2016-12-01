@@ -1,0 +1,39 @@
+@media screen and (max-width: 1134px) {
+  .banner {
+    position: absolute;
+    width: 100%;
+  }
+  .logo-package {
+    position: absolute;
+    left: 50%
+  }
+
+  .content-container {
+    position: relative;
+    top: 100vh;
+    width: 100%;
+    left: 0;
+    margin: 0px;
+    font-size: 120%;
+    box-shadow: -5px -5px 5px rgba(0,0,0,0);
+    -webkit-box-shadow: -5px -5px 5px rgba(0,0,0,0);
+    -moz-box-shadow: -5px -5px 5px rgba(0,0,0,0);
+    .content {
+      width: 90%;
+      .content-button {
+        width: 90px;
+        height: 50px;
+      }
+    }
+  }
+  .sidebar-btn {
+    position: relative;
+    width: 40px;
+    span {
+      margin-bottom: 12px;
+    }
+  }
+  .sidebar {
+    width: 100%;
+  }
+}

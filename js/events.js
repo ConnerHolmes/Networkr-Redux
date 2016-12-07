@@ -26,7 +26,7 @@ var user = {
   ]
 };
 
-//add user events
+//show user events
 $(function(){
   $('.content-button').on('click', function(){
 
@@ -44,6 +44,16 @@ $(function(){
   });
 });
 
+
+//show sidebar event & set value to true
+function addEvent(x,name){
+  user.events[x][name] = true;
+  var showEl = document.getElementById(x);
+  $(showEl).show();
+}
+
+
+//hide user events
 $(function(){
   $('.content-remove').on('click', function(){
 
@@ -60,13 +70,6 @@ $(function(){
     }
   });
 });
-
-//show sidebar event & set value to true
-function addEvent(x,name){
-  user.events[x][name] = true;
-  var showEl = document.getElementById(x);
-  $(showEl).show();
-}
 
 //hide sidebar event & set value to false
 function rmEvent(x,name){

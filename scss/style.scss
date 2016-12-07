@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:500');
-
+@import url('https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css');
 // font-family: 'Open Sans', sans-serif;
 // font-family: 'Roboto', sans-serif;
 
@@ -144,3 +144,48 @@ body {
 
 
 //#1A1A1A;
+
+
+//toggles
+$color: #1DCE93;
+
+*, *:before, *:after { box-sizing: border-box; }
+.row{
+  padding: 20px;
+  margin: 0 0 1px 0;
+  &:hover{
+    cursor: pointer;
+  }
+  &.selected{
+     background: $neutral;
+  }
+}
+
+label {
+  cursor: pointer;
+  &:before{
+    display: inline-block;
+    content: "+";
+    margin: 0 10px 0 0;
+	  width: 35px;
+	  height: 35px;
+    border: 3px solid $color;
+	  border-radius: 100%;
+    vertical-align: middle;
+    color: $color;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 700;
+    line-height: 0.9em;
+    transition: transform 0.2s ease-in-out;
+  }
+}
+
+input[type=checkbox]:checked + label:before{
+  background: $color;
+  color: #fff;
+  transform:rotate(135deg);
+  transform-origin: center center;
+}
+
+input[type=checkbox] { visibility: hidden; }

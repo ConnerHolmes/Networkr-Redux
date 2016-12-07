@@ -1,5 +1,33 @@
 //check for user events on CouchDB
+var xhr = new XMLHttpRequest();
 
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    responseObject = JSON.parse(xhr.responseText);
+
+    for (i = 0; i < responseObject.events.length; i++){
+      //add events to sidebar
+      var newLi = document.createElement('li');
+      newLi.className = 'event-items';
+      var liTitle = document.createTextNode(responseObject.events[i].title);
+      newLi.appendChild(liTitle);
+      var position = document.getElementById('sidebar-list');
+      position.appendChild(newLi);
+    }
+
+  } else {
+    //add events to sidebar
+    var newLi = document.createElement('li');
+    newLi.className = 'event-items';
+    var liTitle = document.createTextNode('nothing to see here');
+    newLi.appendChild(liTitle);
+    var position = document.getElementById('sidebar-list');
+    position.appendChild(newLi);
+  }
+};
+
+xhr.open('GET', 'http://127.0.0.1:5984/conner/36094350e1c8dcfb56ddd2c90a00010f', true);
+xhr.send(null);
 
 //create event list
 var events = [
@@ -64,22 +92,21 @@ function pushEvent(x){
     var newLi = document.createElement('li');
     newLi.className = 'event-items';
     var liTitle = document.createTextNode(events[x].title);
-    var liTime = document.createTextNode(events[x].time);
-    newLi.appendChild(liTitle, liTime);
+    newLi.appendChild(liTitle);
     var position = document.getElementById('sidebar-list');
     position.appendChild(newLi);
     user.push(events[x]);
   }
 }
-// $(function(){
-//   $('.content-remove').on('click', function(){
-//     var buttonID = this.id;
-//
-//     if (buttonID == 'rmChris'){
-//       console.log('Chris removed');
-//     }
-//   });
-// });
-
 
 //PUT to CouchDB with 'Save' button
+// $.ajax({
+//   url:"http://127.0.0.1:5984/conner/36094350e1c8dcfb56ddd2c90a00010f?callback=showEvents",
+//   type: "PUT",
+//   jsonp: "callback",
+//   dataType: "jsonp",
+//   data: user,
+//   success: function(response) {
+//     alert('It workerd!');
+//   }
+// });

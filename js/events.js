@@ -1,36 +1,30 @@
 //check for user events on CouchDB
+var xhr = new XMLHttpRequest();
 
-
-//create event list
-var events = [
-  {
-    indx: 0,
-    speaker: 'Christopher Walken',
-    title: 'CouchDB Walken Through',
-    time: '6pm - 7pm'
-  },
-  {
-    indx: 1,
-    speaker: 'Bill Murray',
-    title: 'Web Performance',
-    time: '7:15pm - 8pm',
-  },
-  {
-    indx: 2,
-    speaker: 'Jony Ive',
-    title: 'UI, less is always mor',
-    time: '8:15pm - 9pm',
-  },
-  {
-    indx: 3,
-    speaker: 'Robin Williams',
-    title: 'Being magnificent',
-    time: '9:05pm - 10pm',
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    responseObject = JSON.parse(xhr.responseText);
+    //call function to show/hide elements based on value
+    // for (i = 0; i < responseObject.events.length; i++){
+    // }
+  } else {
+    //call function to generate a user object and hide all elements
   }
-];
+};
+
+xhr.open('GET', 'http://127.0.0.1:5984/conner/36094350e1c8dcfb56ddd2c90a00010f', true);
+xhr.send(null);
 
 //create user
-var user = [];
+var user = {
+  name: "Conner",
+  events:[
+    {'chris': false},
+    {'bill': false},
+    {'jony': false},
+    {'robin': false}
+  ]
+};
 
 //add user events
 $(function(){
@@ -39,47 +33,56 @@ $(function(){
     var buttonID = this.id;
 
     if (buttonID === 'chris'){
-      pushEvent(0);
+      addEvent(0,'chris');
     } else if (buttonID === 'bill'){
-      pushEvent(1);
+      addEvent(1,'bill');
     } else if (buttonID === 'jony'){
-      pushEvent(2);
+      addEvent(2,'jony');
     } else if (buttonID === 'robin'){
-      pushEvent(3);
+      addEvent(3,'robin');
     }
   });
 });
 
-function pushEvent(x){
-  var checkDouble = function(event) {
-    return event.indx === x;
-  }
+$(function(){
+  $('.content-remove').on('click', function(){
 
-  var eventCount = user.filter(checkDouble);
+    var buttonID = this.id;
 
-  if (eventCount.length > 0) {
-    alert('Already attending');
-  } else {
-    //add events to sidebar
-    var newLi = document.createElement('li');
-    newLi.className = 'event-items';
-    var liTitle = document.createTextNode(events[x].title);
-    var liTime = document.createTextNode(events[x].time);
-    newLi.appendChild(liTitle, liTime);
-    var position = document.getElementById('sidebar-list');
-    position.appendChild(newLi);
-    user.push(events[x]);
-  }
+    if (buttonID === 'rmChris'){
+      rmEvent(0,'chris');
+    } else if (buttonID === 'rmBill'){
+      rmEvent(1,'bill');
+    } else if (buttonID === 'rmJony'){
+      rmEvent(2,'jony');
+    } else if (buttonID === 'rmRobin'){
+      rmEvent(3,'robin');
+    }
+  });
+});
+
+//show sidebar event & set value to true
+function addEvent(x,name){
+  user.events[x][name] = true;
+  var showEl = document.getElementById(x);
+  $(showEl).show();
 }
-// $(function(){
-//   $('.content-remove').on('click', function(){
-//     var buttonID = this.id;
-//
-//     if (buttonID == 'rmChris'){
-//       console.log('Chris removed');
-//     }
-//   });
-// });
 
+//hide sidebar event & set value to false
+function rmEvent(x,name){
+  user.events[x][name] = false;
+  var showEl = document.getElementById(x);
+  $(showEl).hide();
+}
 
 //PUT to CouchDB with 'Save' button
+$('.save-button').on('click', function(){
+  $.ajax({
+    url:"http://127.0.0.1:5984/conner",
+    type:"PUT",
+    data: user,
+    success: function(data){
+      alert('POST successful');
+    }
+  });
+});

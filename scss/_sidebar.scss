@@ -21,6 +21,10 @@ $blue: #0f121b;
 	transform: translateX(-100%);
 	@include transition(all .25s ease-in-out);
 	z-index: 3;
+	
+  .save-button {
+    @extend .content-button;
+  }
 
 	.event-items {
 		color: $neutral;

@@ -81,9 +81,10 @@ function rmEvent(x,name){
 //PUT to CouchDB with 'Save' button
 $('.save-button').on('click', function(){
   $.ajax({
-    url:"http://127.0.0.1:5984/conner",
+    url:"http://127.0.0.1:5984/conner/36094350e1c8dcfb56ddd2c90a00010f",
     type:"PUT",
     data: user,
+    contentType: "application/json",
     success: function(data){
       alert('POST successful');
     }
